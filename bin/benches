@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "hello_rust"
+
+require "benchmark"
+
+Benchmark.bm do |x|
+  x.report(:rust) { HelloRust.rust_fib 40 }
+  x.report(:ruby) { HelloRust.rb_fib 40 }
+end
