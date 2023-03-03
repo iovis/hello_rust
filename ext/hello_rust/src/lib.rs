@@ -1,7 +1,7 @@
 use magnus::{define_module, function, prelude::*, Error};
 
 fn hello(subject: String) -> String {
-    format!("Hello from Rust, {}!", subject)
+    format!("Hello from Rust, {subject}!")
 }
 
 #[magnus::init]

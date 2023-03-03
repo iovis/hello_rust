@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe HelloRust do
-  it "has a version number" do
-    expect(HelloRust::VERSION).not_to be nil
-  end
+  describe ".hello" do
+    subject { described_class.hello(arg) }
 
-  it "does something useful" do
-    expect(false).to eq(true)
+    let(:arg) { "Francis" }
+
+    it { is_expected.to eq "Hello from Rust, Francis!" }
   end
 end

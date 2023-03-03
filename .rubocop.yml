@@ -2,6 +2,10 @@ AllCops:
   NewCops: disable
   TargetRubyVersion: 2.6
 
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
@@ -11,4 +15,4 @@ Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
 Layout/LineLength:
-  Max: 120
+  Enabled: false

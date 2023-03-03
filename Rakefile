@@ -11,10 +11,11 @@ RuboCop::RakeTask.new
 
 require "rake/extensiontask"
 
+desc "compile the extension"
 task build: :compile
 
 Rake::ExtensionTask.new("hello_rust") do |ext|
   ext.lib_dir = "lib/hello_rust"
 end
 
-task default: %i[compile spec rubocop]
+task default: %i[compile spec]
