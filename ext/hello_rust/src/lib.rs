@@ -1,3 +1,5 @@
+use magnus::module::kernel;
+use magnus::value::Qnil;
 use magnus::{define_module, function, prelude::*, Error};
 
 fn fib(n: usize) -> usize {
@@ -8,7 +10,13 @@ fn fib(n: usize) -> usize {
     }
 }
 
+fn puts(val: &str) -> Qnil {
+    kernel().funcall("puts", (val,)).unwrap()
+}
+
 fn hello(subject: String) -> String {
+    puts("hello!");
+
     format!("Hello from Rust, {subject}!")
 }
 
