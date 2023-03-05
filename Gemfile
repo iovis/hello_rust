@@ -5,11 +5,11 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in hello_rust.gemspec
 gemspec
 
-gem "pry", "~> 0.14"
-gem "rake", "~> 13.0"
+gem "pry"
+gem "rake"
 gem "rake-compiler"
 gem "rb_sys"
-gem "rspec", "~> 3.0"
-gem "rubocop", "~> 1.21"
+gem "rspec"
+gem "rubocop"
 gem "rubocop-rake"
 gem "rubocop-rspec"
