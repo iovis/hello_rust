@@ -12,7 +12,7 @@ Benchmark.bm do |x|
 end
 
 Benchmark.bm do |x|
-  file = "spec/fixtures/organizations_big.csv"
+  file = "spec/fixtures/organizations_med.csv"
 
   x.report(:rust_csv) { HelloRust.rust_parse_csv(file) }
   x.report(:ruby_csv) { HelloRust.rb_parse_csv(file) }
