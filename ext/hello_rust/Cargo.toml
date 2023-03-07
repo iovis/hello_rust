@@ -10,4 +10,5 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
+csv = "1.2.1"
 magnus = { version = "0.5" }

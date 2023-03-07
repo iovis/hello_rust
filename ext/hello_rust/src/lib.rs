@@ -1,12 +1,15 @@
+use std::collections::HashMap;
+
 use magnus::module::kernel;
 use magnus::value::Qnil;
-use magnus::{define_module, function, prelude::*, Error};
+use magnus::{define_module, function, prelude::*, Error, RArray};
 
 #[magnus::init]
 fn init() -> Result<(), Error> {
     let module = define_module("HelloRust")?;
     module.define_singleton_method("hello", function!(hello, 1))?;
-    module.define_singleton_method("rust_fib", magnus::function!(fib, 1))?;
+    module.define_singleton_method("rust_fib", function!(fib, 1))?;
+    module.define_singleton_method("rust_parse_csv", function!(csv_parse, 1))?;
 
     Ok(())
 }
@@ -29,4 +32,16 @@ fn puts(val: &str) -> Qnil {
 // Magnus needs to pass Strings instead of &str
 fn hello(subject: String) -> String {
     format!("Hello from Rust, {subject}!")
+}
+
+fn csv_parse(path: String) -> Result<RArray, Error> {
+    let csv = RArray::new();
+    let mut reader = csv::Reader::from_path(path).unwrap();
+
+    for result in reader.deserialize() {
+        let record: HashMap<String, String> = result.unwrap();
+        csv.push(record)?;
+    }
+
+    Ok(csv)
 }
