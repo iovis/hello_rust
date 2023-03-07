@@ -3,6 +3,8 @@
 require_relative "hello_rust/version"
 require_relative "hello_rust/hello_rust"
 
+require "csv"
+
 module HelloRust
   class Error < StandardError; end
 
@@ -11,5 +13,10 @@ module HelloRust
     return 1 if number == 1
 
     rb_fib(number - 1) + rb_fib(number - 2)
+  end
+
+  def self.rb_parse_csv(path)
+    file = File.read(path)
+    CSV.parse(file, headers: true)
   end
 end

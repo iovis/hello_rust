@@ -22,4 +22,24 @@ RSpec.describe HelloRust do
     it { expect(described_class.rb_fib(7)).to eq 13 }
     it { expect(described_class.rb_fib(8)).to eq 21 }
   end
+
+  describe ".rb_parse_csv" do
+    subject(:csv) { described_class.rb_parse_csv(file) }
+
+    let(:file) { "spec/fixtures/organizations_small.csv" }
+
+    it do
+      expect(csv.first.to_h).to eq({
+                                     "Index" => "1",
+                                     "Organization Id" => "391dAA77fea9EC1",
+                                     "Name" => "Daniel-Mcmahon",
+                                     "Website" => "https://stuart-rios.biz/",
+                                     "Country" => "Cambodia",
+                                     "Description" => "Focused eco-centric help-desk",
+                                     "Founded" => "2013",
+                                     "Industry" => "Sports",
+                                     "Number of employees" => "1878"
+                                   })
+    end
+  end
 end

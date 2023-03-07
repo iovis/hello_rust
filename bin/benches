@@ -6,7 +6,14 @@ require "hello_rust"
 
 require "benchmark"
 
+# Benchmark.bm do |x|
+#   x.report(:rust_fib) { HelloRust.rust_fib 40 }
+#   x.report(:ruby_fib) { HelloRust.rb_fib 40 }
+# end
+
 Benchmark.bm do |x|
-  x.report(:rust) { HelloRust.rust_fib 40 }
-  x.report(:ruby) { HelloRust.rb_fib 40 }
+  file = "spec/fixtures/organizations_big.csv"
+
+  # x.report(:rust_csv) { HelloRust.rust_fib 40 }
+  x.report(:ruby_csv) { HelloRust.rb_parse_csv(file) }
 end
