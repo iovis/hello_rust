@@ -10,6 +10,7 @@ fn init() -> Result<(), Error> {
     module.define_singleton_method("hello", function!(hello, 1))?;
     module.define_singleton_method("rust_fib", function!(fib, 1))?;
     module.define_singleton_method("rust_parse_csv", function!(csv_parse, 1))?;
+    module.define_singleton_method("rust_count_employees", function!(count_employees, 1))?;
 
     Ok(())
 }
@@ -44,4 +45,18 @@ fn csv_parse(path: String) -> Result<RArray, Error> {
     }
 
     Ok(csv)
+}
+
+fn count_employees(path: String) -> usize {
+    let mut count = 0;
+    let mut reader = csv::Reader::from_path(path).unwrap();
+
+    for result in reader.records() {
+        let record = result.unwrap();
+        let employees: usize = record.iter().nth_back(0).unwrap().parse().unwrap();
+
+        count += employees;
+    }
+
+    count
 }

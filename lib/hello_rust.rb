@@ -19,4 +19,10 @@ module HelloRust
     file = File.read(path)
     CSV.parse(file, headers: true)
   end
+
+  def self.rb_count_employees(path)
+    file = File.read(path)
+    csv = CSV.parse(file, headers: true)
+    csv.sum { _1["Number of employees"].to_i }
+  end
 end

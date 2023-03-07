@@ -17,3 +17,10 @@ Benchmark.bm do |x|
   x.report(:rust_csv) { HelloRust.rust_parse_csv(file) }
   x.report(:ruby_csv) { HelloRust.rb_parse_csv(file) }
 end
+
+Benchmark.bm do |x|
+  file = "spec/fixtures/organizations_med.csv"
+
+  x.report(:rust_csv_count) { HelloRust.rust_count_employees(file) }
+  x.report(:ruby_csv_count) { HelloRust.rb_count_employees(file) }
+end
