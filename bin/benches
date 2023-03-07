@@ -22,5 +22,6 @@ Benchmark.bm do |x|
   file = "spec/fixtures/organizations_med.csv"
 
   x.report(:rust_csv_count) { HelloRust.rust_count_employees(file) }
+  x.report(:rust_polars_count) { HelloRust.rust_count_employees_polars(file) }
   x.report(:ruby_csv_count) { HelloRust.rb_count_employees(file) }
 end

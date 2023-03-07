@@ -71,6 +71,14 @@ RSpec.describe HelloRust do
     it { is_expected.to eq 48_727 }
   end
 
+  describe ".rust_count_employees_polars" do
+    subject { described_class.rust_count_employees_polars(file) }
+
+    let(:file) { "spec/fixtures/organizations_small.csv" }
+
+    it { is_expected.to eq 48_727 }
+  end
+
   describe ".rb_count_employees" do
     subject { described_class.rb_count_employees(file) }
 

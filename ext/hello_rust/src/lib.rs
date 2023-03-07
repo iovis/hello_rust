@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use magnus::module::kernel;
 use magnus::value::Qnil;
 use magnus::{define_module, function, prelude::*, Error, RArray};
+use polars::prelude::*;
 
 #[magnus::init]
 fn init() -> Result<(), Error> {
@@ -11,6 +12,10 @@ fn init() -> Result<(), Error> {
     module.define_singleton_method("rust_fib", function!(fib, 1))?;
     module.define_singleton_method("rust_parse_csv", function!(csv_parse, 1))?;
     module.define_singleton_method("rust_count_employees", function!(count_employees, 1))?;
+    module.define_singleton_method(
+        "rust_count_employees_polars",
+        function!(count_employees_polars, 1),
+    )?;
 
     Ok(())
 }
@@ -59,4 +64,19 @@ fn count_employees(path: String) -> usize {
     }
 
     count
+}
+
+fn count_employees_polars(path: String) -> i64 {
+    let df = LazyCsvReader::new(path).finish().unwrap();
+
+    let sum_df = df
+        .select([col("Number of employees").sum()])
+        .collect()
+        .unwrap();
+
+    if let Ok(AnyValue::Int64(sum)) = sum_df[0].get(0) {
+        return sum;
+    }
+
+    panic!("not an int");
 }

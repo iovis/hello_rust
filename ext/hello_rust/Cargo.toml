@@ -12,3 +12,5 @@ crate-type = ["cdylib"]
 [dependencies]
 csv = "1.2.1"
 magnus = { version = "0.5" }
+polars = { version = "0.27.2", features = ["lazy"] }
+serde = { version = "1.0.152", features = ["derive"] }
