@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "bundler/setup"
-require "hello_rust"
+require 'bundler/setup'
+require 'hello_rust'
 
-require "benchmark"
+require 'benchmark'
+
+file = 'spec/fixtures/organizations_med.csv'
 
 Benchmark.bm do |x|
   x.report(:rust_fib) { HelloRust.rust_fib 40 }
@@ -12,15 +14,11 @@ Benchmark.bm do |x|
 end
 
 Benchmark.bm do |x|
-  file = "spec/fixtures/organizations_med.csv"
-
   x.report(:rust_csv) { HelloRust.rust_parse_csv(file) }
   x.report(:ruby_csv) { HelloRust.rb_parse_csv(file) }
 end
 
 Benchmark.bm do |x|
-  file = "spec/fixtures/organizations_med.csv"
-
   x.report(:rust_csv_count) { HelloRust.rust_count_employees(file) }
   x.report(:rust_polars_count) { HelloRust.rust_count_employees_polars(file) }
   x.report(:ruby_csv_count) { HelloRust.rb_count_employees(file) }

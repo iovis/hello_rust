@@ -1,13 +1,14 @@
 use std::collections::HashMap;
 
-use magnus::module::kernel;
 use magnus::value::Qnil;
-use magnus::{define_module, function, prelude::*, Error, RArray};
+use magnus::{function, prelude::*, RArray, Ruby};
 use polars::prelude::*;
 
+type RbResult<T> = Result<T, magnus::Error>;
+
 #[magnus::init]
-fn init() -> Result<(), Error> {
-    let module = define_module("HelloRust")?;
+fn init(ruby: &Ruby) -> RbResult<()> {
+    let module = ruby.define_module("HelloRust")?;
     module.define_singleton_method("hello", function!(hello, 1))?;
     module.define_singleton_method("rust_fib", function!(fib, 1))?;
     module.define_singleton_method("rust_parse_csv", function!(csv_parse, 1))?;
@@ -30,8 +31,8 @@ fn fib(n: usize) -> usize {
 }
 
 #[allow(dead_code)]
-fn puts(val: &str) -> Qnil {
-    kernel().funcall("puts", (val,)).unwrap()
+fn puts(ruby: &Ruby, val: &str) -> RbResult<Qnil> {
+    ruby.module_kernel().funcall("puts", (val,))
 }
 
 #[allow(clippy::needless_pass_by_value)]
@@ -40,7 +41,7 @@ fn hello(subject: String) -> String {
     format!("Hello from Rust, {subject}!")
 }
 
-fn csv_parse(path: String) -> Result<RArray, Error> {
+fn csv_parse(path: String) -> RbResult<RArray> {
     let csv = RArray::new();
     let mut reader = csv::Reader::from_path(path).unwrap();
 

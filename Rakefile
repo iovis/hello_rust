@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
 
-require "rubocop/rake_task"
+require 'rubocop/rake_task'
 
 RuboCop::RakeTask.new
 
-require "rake/extensiontask"
+require 'rake/extensiontask'
 
-desc "compile the extension"
+desc 'compile the extension'
 task build: :compile
 
-Rake::ExtensionTask.new("hello_rust") do |ext|
-  ext.lib_dir = "lib/hello_rust"
+Rake::ExtensionTask.new('hello_rust') do |ext|
+  ext.lib_dir = 'lib/hello_rust'
 end
 
 task default: %i[compile spec]
