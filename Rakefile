@@ -19,3 +19,6 @@ Rake::ExtensionTask.new('hello_rust') do |ext|
 end
 
 task default: %i[compile spec]
+task benchmark: [:compile] do
+  sh("bundle exec #{FileUtils::RUBY} bin/benches")
+end
