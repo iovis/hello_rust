@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in hello_rust.gemspec
 gemspec
 
+gem 'benchmark-ips'
 gem 'pry'
 gem 'rake'
 gem 'rake-compiler'

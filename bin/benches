@@ -5,14 +5,20 @@ require 'bundler/setup'
 require 'hello_rust'
 
 require 'benchmark'
+require 'benchmark/ips'
 
-file = 'spec/fixtures/organizations_med.csv'
+Benchmark.ips do |x|
+  x.report('fib20 ruby') { HelloRust.rb_fib 20 }
+  x.report('fib20 rust') { HelloRust.rust_fib 20 }
+  x.compare!
+end
 
 Benchmark.bm do |x|
   x.report(:rust_fib) { HelloRust.rust_fib 40 }
   x.report(:ruby_fib) { HelloRust.rb_fib 40 }
 end
 
+file = 'spec/fixtures/organizations_med.csv'
 Benchmark.bm do |x|
   x.report(:rust_csv) { HelloRust.rust_parse_csv(file) }
   x.report(:ruby_csv) { HelloRust.rb_parse_csv(file) }
